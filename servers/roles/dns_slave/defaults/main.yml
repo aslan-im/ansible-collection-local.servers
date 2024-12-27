@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for dns_slave
+
+dns_config_files:
+- named.conf
+
+dns_config_dest_path: /etc/bind/
+dns_compose_file: compose.yaml
+dns_compose_directory: /home/{{ ansible_user }}/docker/dns/

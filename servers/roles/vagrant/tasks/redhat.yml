@@ -1,0 +1,17 @@
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: present
+
+- name: Add HashiCorp Yum repository
+  yum_repository:
+    name: hashicorp
+    description: HashiCorp Stable - $releasever - $basearch
+    baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    enabled: yes
+    gpgcheck: no
+
+- name: Install Vagrant
+  yum:
+    name: vagrant
+    state: present

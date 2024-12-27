@@ -1,0 +1,23 @@
+---
+# defaults file for virtualbox
+virtualbox_keys:
+  - https://www.virtualbox.org/download/oracle_vbox_2016.asc
+  - https://www.virtualbox.org/download/oracle_vbox.asc
+
+virtualbox_requirements: kernel-devel
+
+_virtualbox_repo_mapping:
+  Fedora: fedora
+  RedHat: el
+  Suse: opensuse
+
+virtualbox_repo_mapping: "{{ _virtualbox_repo_mapping[ansible_distribution] | default(_virtualbox_repo_mapping[ansible_os_family]) }}"
+
+virtualbox_yum_baseurl: "http://download.virtualbox.org/virtualbox/rpm/{{ virtualbox_repo_mapping }}/$releasever/$basearch"
+
+
+_virtualbox_package:
+  default: VirtualBox-{{ virtualbox_version }}
+  Debian: virtualbox-{{ virtualbox_version }}
+
+virtualbox_package: "{{ _virtualbox_package[ansible_os_family] | default(_virtualbox_package['default']) }}"

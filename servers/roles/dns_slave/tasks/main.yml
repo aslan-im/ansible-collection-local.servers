@@ -1,0 +1,32 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for dns_slave
+- name: Create bind configuration directory
+  ansible.builtin.file:
+    name: "{{ dns_config_dest_path }}"
+    state: directory
+    mode: '0777'
+    owner: "{{ ansible_user }}"
+    group: "root"
+- name: Copy DNS configuration files to target host
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ dns_config_dest_path }}"
+    mode: '0777'
+    owner: "{{ ansible_user }}"
+  with_items: "{{ dns_config_files }}"
+
+- name: Copy DNS Compose file
+  ansible.builtin.copy:
+    src: "{{ dns_compose_file }}"
+    dest: "{{ dns_compose_directory }}"
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Start Docker container with DNS server
+  community.docker.docker_compose_v2:
+    project_src: "{{ dns_compose_directory }}"
+    state: present
+    recreate: auto
+    remove_orphans: true

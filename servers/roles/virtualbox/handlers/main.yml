@@ -1,0 +1,11 @@
+---
+# handlers file for virtualbox
+- name: Install kernel headers
+  ansible.builtin.package:
+    name: "{{ ansible_kernel_headers }}"
+    state: present
+
+- name: Run vboxconfig
+  ansible.builtin.command:
+    cmd: /sbin/vboxconfig
+  when: ansible_kernel_headers is defined

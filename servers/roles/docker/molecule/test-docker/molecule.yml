@@ -1,0 +1,17 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: instance-debian
+    image: nmusatti/ubuntu2404-pys-systemd
+    pre_build_image: true
+  - name: instance-rhel
+    image: redhat/ubi9:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      remote_user: root
+      verbosity: 2
+ 

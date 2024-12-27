@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Testing Docker role
+      ansible.builtin.include_role:
+        name: local.servers.docker
+        tasks_from: main.yml
